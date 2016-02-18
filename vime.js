@@ -150,6 +150,6 @@ var VimeBox = React.createClass({
 
 
 ReactDOM.render(
-    <VimeBox url='../../../some.json'/>,
+    <VimeBox url='thanksyourob.azurewebsites.net/some.json'/>,
     document.getElementById('content')
 );
