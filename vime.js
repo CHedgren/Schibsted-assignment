@@ -154,3 +154,7 @@ ReactDOM.render(
     <VimeBox url='some.json'/>,
     document.getElementById('content')
 );
+
+//TODO: Add a controller component. It's a fieldset, it goes under the heading.
+
+//TODO: Add pagination. It's a filter with two bounds, upper and lower.
