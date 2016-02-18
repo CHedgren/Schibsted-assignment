@@ -1,0 +1,7 @@
+.vime {
+  display: flex;
+  border: black 2px solid;
+  width: 50rem;
+  margin: 5rem auto 5rem auto;
+  overflow: hidden;
+  padding: 5rem 2rem 2rem 5rem; }
