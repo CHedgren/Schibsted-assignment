@@ -118,7 +118,7 @@ var VimeBox = React.createClass({
         $.ajax({
             url: this.props.url,
             dataType: 'json',
-            cache: false,
+            cache: true,
             success: function (data) {
                 this.setState({data: data});
 
