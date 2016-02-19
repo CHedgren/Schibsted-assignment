@@ -71,16 +71,17 @@ var Blurb = React.createClass({
 var VimeList = React.createClass({
 
       render: function() {
-          var showN = this.props.showN;
-          var substring = this.props.substring;
-          var likesN = this.props.likesN;
+
           var content = this.props.vimes.list ? this.props.vimes.list : [];
+          var showN = this.props.showN;
+          var likesN = this.props.likesN;
+          var substring = this.props.substring;
 
         var vimes = content.filter(function(e, i){
 
-            return i < showN}).filter(function(e, i){
+            return i < showN }).filter(function(e){
 
-            return e.metadata.connections.likes.total < 30000}).filter(function(e, i){
+            return e.user.metadata.connections.likes.total > likesN}).filter(function(e, i){
 
             return e.description.indexOf(substring) > -1}).map(function(list, index) {
 
@@ -91,6 +92,7 @@ var VimeList = React.createClass({
                     </div>
             );
         });
+
         return (
             <div className="Vimefeed">
                 {vimes}
@@ -101,6 +103,30 @@ var VimeList = React.createClass({
     }
 });
 
+var Controls = React.createClass({
+
+    moreChange: function(e) {
+
+            return this.props.updateFilter(e);
+        },
+
+
+
+    render: function(){
+        return (
+            <fieldset>
+                <button className="more" onClick={this.moreChange}>  MORE     </button>
+                <button className="likes" onClick={this.moreChange}>  LIKES    </button>
+                <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
+                </fieldset>
+        );
+
+
+    }
+
+
+});
+
 
 var VimeBox = React.createClass({
 
@@ -108,11 +134,30 @@ var VimeBox = React.createClass({
         return {data: [],
             showN: 10,
             substring: "",
-        likesN: 1};
+            likesN: 1};
     },
-    handleChange: function(event) {
-        this.setState({substring: event.target.value});
+    handleChange: function(e) {
+
+
+        switch(e.target.className) {
+            case "more":
+                this.setState({showN: this.state.showN + 1});
+                console.log(this.state.showN);
+
+
+                break;
+            case "likes":
+                this.setState({likesN: this.state.likesN * 2});
+                console.log(this.state.likesN);
+                break;
+            case "filter":
+               this.setState({substring: e.target.value});
+                console.log(this.state.substring);
+                break;
+        }
     },
+
+
     componentDidMount: function () {
 
         $.ajax({
@@ -136,11 +181,9 @@ var VimeBox = React.createClass({
     render: function () {
         return (
             <main className="vimeBox">
-                <button onClick={function(){this.setState({showN: this.state.showN + 1})}.bind(this)}>   {this.state.showN}    </button>
-                <button onClick={function(){this.setState({likesN: this.state.likesN * 2 })}.bind(this)}>   {this.state.likesN}    </button>
-                <input type="text" value={this.state.value} onChange={this.handleChange}/> {this.state.substring}
+                <Controls updateFilter={this.handleChange}/>
                 <h1>Vimeo-feed</h1>
-                <VimeList vimes={this.state.data} showN = {this.state.showN} likesN = {this.state.showN} substring = {this.state.substring}/>
+                <VimeList vimes={this.state.data} showN = {this.state.showN} likesN = {this.state.likesN} substring = {this.state.substring}/>
 
             </main>
         );
