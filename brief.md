@@ -25,10 +25,28 @@ The resulting `GET` line should be `https://api.vimeo.com/channels/top/videos?pa
 Click “Make call” and copy the resulting object into your code.
 
 ## Display the results
-The display should be similar to a twitter feed.  (https://twitter.com/onedirection)  Note the authors image on the left, with content on the right.  The displayed information should include   author image and link; the video name with link; the video description; number of plays, comments, and likes.  The text should not wrap below the author image.
+The display should be similar to a twitter feed.
+(https://twitter.com/onedirection)
+Note the authors image on the left, with content on the right.
+ The displayed information should include
 
-1. The default view should only be 10 results.
+   DONE author image and link;
+
+   DONE the video name with link;
+
+   DONE the video description;
+
+   DONE number of plays,
+
+   DONE comments,
+
+   DONE and likes.
+
+   DONE The text should not wrap below the author image.
+
+
+1. DONE. The default view should only be 10 results.
 1. Provide the ability to view 10, 25, or 50 maximum results.
-1. Provide the ability to filter videos from users that have more than 10 likes. (not videos that have more than 10 1 likes.)  A simple checkbox with description is fine for UI.
-1. Provide the ability to filter videos based on text in the description.
+1. DONE. Provide the ability to filter videos from users that have more than 10 likes.  (not videos that have more than 10 1 likes.)  A simple checkbox with description is fine for UI.
+1. DONE Provide the ability to filter videos based on text in the description.
 1. Provide a next button if there are more results than what is shown (e.g. no filters, and only 10 displayed)

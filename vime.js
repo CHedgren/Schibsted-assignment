@@ -5,6 +5,7 @@ var Vime = React.createClass({
 
         return (
             <section className="vime">
+                <h1>{this.props.index}</h1>
                 <Author className="author" user = {this.props.list.user}/>
 
                 <Blurb className="blurb" blurb = {this.props.list}/>
@@ -16,14 +17,15 @@ var Vime = React.createClass({
 
 var Author = React.createClass({
     render: function() {
-        var imglink= this.props.user.pictures;
+        var imglink= this.props.user.pictures.sizes[3].link;
 
         var name = this.props.user.name;
+        var link = this.props.user.link;
         return (
-            <div className="stats">
-                <img src="https://i.vimeocdn.com/portrait/4547961_75x75.jpg?r=pad" alt="Author"/>
+            <div className="author">
+                <img src={imglink} alt="Author"/>
 
-                {name}
+                <a href={link}> {name}</a>
             </div>
         );
     }
@@ -58,8 +60,8 @@ var Blurb = React.createClass({
         var desc = this.props.blurb.description;
         var name = this.props.blurb.name;
         return (
-            <div className="stats">
-                <h1> {name} </h1>
+            <div className="blurb">
+                <h1><a href={this.props.blurb.link}> {name}</a> </h1>
                 <p>{desc}</p>
 
             </div>
@@ -73,23 +75,29 @@ var VimeList = React.createClass({
       render: function() {
 
           var content = this.props.vimes.list ? this.props.vimes.list : [];
-          var showN = this.props.showN;
-          var likesN = this.props.likesN;
+          var bounds = this.props.bounds;
+          var allLikes = this.props.allLikes;
           var substring = this.props.substring;
 
         var vimes = content.filter(function(e, i){
 
-            return i < showN }).filter(function(e){
+            return i >= bounds[0] && i < bounds[1] }).filter(function(e) {
+            if (allLikes)
+                return e.user.metadata.connections.likes.total > 10
+            return true;
 
-            return e.user.metadata.connections.likes.total > likesN}).filter(function(e, i){
+        }).filter(function(e, i){
 
-            return e.description.indexOf(substring) > -1}).map(function(list, index) {
+            if (e.description.indexOf(substring) > -1){
+                return true;
+            }
+            }).map(function(list, index) {
 
             return (
-                <div>
 
-                <Vime list={list} />
-                    </div>
+
+                <Vime list={list} index={index} />
+
             );
         });
 
@@ -115,8 +123,13 @@ var Controls = React.createClass({
     render: function(){
         return (
             <fieldset>
-                <button className="more" onClick={this.moreChange}>  MORE     </button>
-                <button className="likes" onClick={this.moreChange}>  LIKES    </button>
+                <select>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+
+                </select>
+                <label><input type="checkbox" className="likes" onClick={this.moreChange}/>Only user better than 10 likes, please</label>
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
                 </fieldset>
         );
@@ -132,27 +145,29 @@ var VimeBox = React.createClass({
 
     getInitialState: function () {
         return {data: [],
-            showN: 10,
+            i: 0,
+            bounds: [0,10],
             substring: "",
-            likesN: 1};
+            allLikes: true};
     },
     handleChange: function(e) {
 
 
         switch(e.target.className) {
             case "more":
-                this.setState({showN: this.state.showN + 1});
-                console.log(this.state.showN);
-
+                this.setState({bounds: [0, [10,25,50][(this.setState({i: (this.state.i +1)%3}))]]});
 
                 break;
             case "likes":
-                this.setState({likesN: this.state.likesN * 2});
-                console.log(this.state.likesN);
+                this.setState({allLikes: !this.state.allLikes});
+                console.log(this.state.allLikes)
                 break;
             case "filter":
                this.setState({substring: e.target.value});
                 console.log(this.state.substring);
+                break;
+            case "pager":
+                this.setState({bounds: [upper, lower]});
                 break;
         }
     },
@@ -180,12 +195,12 @@ var VimeBox = React.createClass({
 
     render: function () {
         return (
-            <main className="vimeBox">
+            <div className="vimeBox">
                 <Controls updateFilter={this.handleChange}/>
                 <h1>Vimeo-feed</h1>
-                <VimeList vimes={this.state.data} showN = {this.state.showN} likesN = {this.state.likesN} substring = {this.state.substring}/>
+                <VimeList vimes={this.state.data} bounds = {this.state.bounds} allLikes = {this.state.allLikes} substring = {this.state.substring}/>
 
-            </main>
+            </div>
         );
     }
 });
