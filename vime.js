@@ -79,10 +79,10 @@ var VimeList = React.createClass({
         var bounds = this.props.bounds;
         var allLikes = this.props.allLikes;
         var substring = this.props.substring;
-        console.log(content.length);
+
         var vimes = content.filter(function (e, i) {
-            //return true;
-            return i >= bounds[0] && i < bounds[1]
+
+            return i >= bounds[0] && i < bounds[1];
         }).filter(function (e) {
 
             if (allLikes)
@@ -124,11 +124,11 @@ var Controls = React.createClass({
 
 
     render: function () {
-        console.log(this.props.paging);
+
         return (
             <fieldset>
                 <select className="more" onChange={this.moreChange}>
-                    <option value="9">10</option>
+                    <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
 
@@ -136,7 +136,8 @@ var Controls = React.createClass({
                 <label><input type="checkbox" className="likes" onClick={this.moreChange}/>Only users better than 10
                     likes, please</label>
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
-                <button className="next" onClick={this.moreChange}>Next</button>
+                {this.props.paging ? <button className="next" onClick={this.moreChange}>Next</button>: <p>NO</p>}
+
             </fieldset>
         );
 
@@ -151,7 +152,8 @@ var VimeBox = React.createClass({
         return {
             data: [],
             i: 0,
-            bounds: [0, 10],
+            show: 10,
+            bounds: [0,10],
             substring: "",
             allLikes: false,
             paging: true
@@ -162,8 +164,9 @@ var VimeBox = React.createClass({
 
         switch (e.target.className) {
             case "more":
-                this.setState({bounds: [0, e.target.value]});
-                console.log(e.target.value);
+                this.setState({bounds: e.target.value});
+                console.log(e);
+
                 break;
             case "likes":
                 this.setState({allLikes: !this.state.allLikes});
@@ -174,7 +177,7 @@ var VimeBox = React.createClass({
                 console.log(this.state.substring);
                 break;
             case "next":
-                this.setState({bounds: [this.state.bounds[0]+this.state.bounds[1], this.state.bounds[1]+this.state.bounds[1]]});
+                this.setState({bounds: [this.state.bounds[0]+10, this.state.bounds[1]+10]});
                 break;
         }
 
@@ -200,9 +203,7 @@ var VimeBox = React.createClass({
     },
 
     render: function () {
-        if (this.state.data.list > this.state.bounds[1]) {
-            this.setState({paging: true});
-        }
+
         return (
             <div className="vimeBox">
                 <Controls updateFilter={this.handleChange} paging={this.state.paging}/>
@@ -221,6 +222,6 @@ ReactDOM.render(
     document.getElementById('content')
 );
 
-//TODO: Add a controller component. It's a fieldset, it goes under the heading.
+
 
 //TODO: Add pagination. It's a filter with two bounds, upper and lower.
