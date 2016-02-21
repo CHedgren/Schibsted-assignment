@@ -180,7 +180,9 @@ var Controls = React.createClass({
                 <label><input type="checkbox" className="likes" onClick={this.moreChange}/>Only users better than 10
                     likes, please</label>
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
-                {this.state.paging ? <div><button className="next" onClick={this.moreChange}>Next</button> Showing {this.props.bounds[0]} - {this.props.bounds[1]}</div> : <b> </b>}
+                Showing {this.props.bounds[0]} - {this.props.bounds[1]} of 50
+                {this.state.paging ? <div><button className="next" onClick={this.moreChange}>Next</button> </div> : <b> </b>}
+                {(this.props.bounds[0] != 0) ? <div><button className="previous" onClick={this.moreChange}>Previous</button> </div> : <b> </b>}
             </fieldset>
         );
 
@@ -226,6 +228,9 @@ var VimeBox = React.createClass({
                 break;
             case "next":
                 this.setState({bounds: [this.state.bounds[0]+this.state.show, this.state.bounds[1]+this.state.show]});
+                break;
+            case "previous":
+                this.setState({bounds: [this.state.bounds[0]-this.state.show, this.state.bounds[1]-this.state.show]});
                 break;
         }
 
