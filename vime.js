@@ -181,8 +181,8 @@ var Controls = React.createClass({
                     likes, please</label>
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
                 Showing {this.props.bounds[0]} - {this.props.bounds[1]} of 50
-                {this.state.paging ? <div><button className="next" onClick={this.moreChange}>Next</button> </div> : <b> </b>}
-                {(this.props.bounds[0] != 0) ? <div><button className="previous" onClick={this.moreChange}>Previous</button> </div> : <b> </b>}
+                {this.state.paging ? <button className="next" onClick={this.moreChange}>Next</button>  : <button className="next" onClick={this.moreChange} disabled="true">Next</button>}
+                {(this.props.bounds[0] != 0) ? <button className="previous" onClick={this.moreChange}>Previous</button>  :<button className="previous" onClick={this.moreChange} disabled="true">Previous</button> }
             </fieldset>
         );
 
