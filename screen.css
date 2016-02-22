@@ -34,14 +34,15 @@ ul {
 .plays:before, .likes:before, .comments:before {
   font-family: FontAwesome; }
 
-.stats .plays:before {
-  content: "\f04b"; }
-
-.stats .likes:before {
-  content: "\f004"; }
-
-.stats .comments:before {
-  content: "\f075"; }
+.stats {
+  margin-left: 0.5rem;
+  margin-top: 2rem; }
+  .stats .plays:before {
+    content: "\f04b"; }
+  .stats .likes:before {
+    content: "\f004"; }
+  .stats .comments:before {
+    content: "\f075"; }
 
 .vime {
   display: flex;

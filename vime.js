@@ -6,12 +6,15 @@ var Vime = React.createClass({
 
         return (
             <section className="vime">
-                {this.props.index +1}
-                <Author className="author" user={this.props.list.user}/>
+                {this.props.index + 1}
+                <div>
+                    <Author className="author" user={this.props.list.user}/>
+                    <Stats className="stats" stats={this.props.list.stats}
+                           likes={this.props.list.metadata.connections.likes}
+                           comments={this.props.list.metadata.connections.comments}/>
+                </div>
                 <Blurb className="blurb" blurb={this.props.list}/>
-                <Stats className="stats" stats={this.props.list.stats}
-                       likes={this.props.list.metadata.connections.likes}
-                       comments={this.props.list.metadata.connections.comments}/>
+
             </section>
         );
     }
@@ -43,13 +46,13 @@ var Stats = React.createClass({
         return (
             <ul className="stats">
                 <li className="plays">
-                     {plays}
+                    {plays}
                 </li>
                 <li className="likes">
-                     {likes}
+                    {likes}
                 </li>
                 <li className="comments">
-                     {comments}
+                    {comments}
                 </li>
             </ul>
         );
@@ -74,18 +77,17 @@ var Blurb = React.createClass({
 var VimeList = React.createClass({
 
 
-    componentWillReceiveProps: function(nextProps){
+    componentWillReceiveProps: function (nextProps) {
 
         var content = this.props.vimes.list ? this.props.vimes.list : new Array(50);
         var bounds = this.props.bounds;
 
 
-        if (content.length > nextProps.bounds[1]){
+        if (content.length > nextProps.bounds[1]) {
 
             $(paging).trigger('true');
         }
-        else
-        {
+        else {
 
             $(paging).trigger('false');
         }
@@ -99,7 +101,6 @@ var VimeList = React.createClass({
         var bounds = this.props.bounds;
         var allLikes = this.props.allLikes;
         var substring = this.props.substring;
-
 
 
         var vimes = content.filter(function (e, i) {
@@ -140,17 +141,17 @@ var VimeList = React.createClass({
 });
 
 var Controls = React.createClass({
-    getInitialState: function(){
-    return {paging: true};
+    getInitialState: function () {
+        return {paging: true};
 
-},
-    componentDidMount: function(){
-        $(paging).on('true', function(e){
+    },
+    componentDidMount: function () {
+        $(paging).on('true', function (e) {
 
             this.setState({paging: true});
         }.bind(this));
 
-        $(paging).on('false', function(e){
+        $(paging).on('false', function (e) {
 
             this.setState({paging: false});
         }.bind(this));
@@ -167,7 +168,7 @@ var Controls = React.createClass({
         return this.props.updateFilter(e);
     },
 
-        render: function () {
+    render: function () {
 
         return (
             <fieldset>
@@ -181,9 +182,12 @@ var Controls = React.createClass({
                     likes, please</label>
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
                 Showing {this.props.bounds[0]} - {this.props.bounds[1]} of 50
-                {(this.props.bounds[0] != 0) ? <button className="previous" onClick={this.moreChange}>Previous</button>  :<button className="previous" onClick={this.moreChange} disabled="true">Previous</button> }
+                {(this.props.bounds[0] != 0) ?
+                    <button className="previous" onClick={this.moreChange}>Previous</button> :
+                    <button className="previous" onClick={this.moreChange} disabled="true">Previous</button> }
 
-                {this.state.paging ? <button className="next" onClick={this.moreChange}>Next</button>  : <button className="next" onClick={this.moreChange} disabled="true">Next</button>}
+                {this.state.paging ? <button className="next" onClick={this.moreChange}>Next</button> :
+                    <button className="next" onClick={this.moreChange} disabled="true">Next</button>}
             </fieldset>
         );
 
@@ -199,7 +203,7 @@ var VimeBox = React.createClass({
             data: [],
             i: 0,
             show: 10,
-            bounds: [0,10],
+            bounds: [0, 10],
             substring: "",
             allLikes: false,
             paging: true,
@@ -214,7 +218,7 @@ var VimeBox = React.createClass({
                 var a = 0;
                 var b = parseInt(e.target.value);
 
-                this.setState({bounds: [a,b]});
+                this.setState({bounds: [a, b]});
                 this.setState({show: b});
 
 
@@ -228,18 +232,18 @@ var VimeBox = React.createClass({
 
                 break;
             case "next":
-                this.setState({bounds: [this.state.bounds[0]+this.state.show, this.state.bounds[1]+this.state.show]});
+                this.setState({bounds: [this.state.bounds[0] + this.state.show, this.state.bounds[1] + this.state.show]});
                 break;
             case "previous":
-                this.setState({bounds: [this.state.bounds[0]-this.state.show, this.state.bounds[1]-this.state.show]});
+                this.setState({bounds: [this.state.bounds[0] - this.state.show, this.state.bounds[1] - this.state.show]});
                 break;
         }
 
     },
 
-    togglePaging: function(val) {
+    togglePaging: function (val) {
 
-      this.setState({paging: val});
+        this.setState({paging: val});
     },
 
 
@@ -248,7 +252,7 @@ var VimeBox = React.createClass({
         $.ajax({
             url: this.props.url,
             dataType: 'json',
-           // crossDomain: true, Turn of Cors and fix mime types on Azure instead.
+            // crossDomain: true, Turn of Cors and fix mime types on Azure instead.
             cache: true,
             success: function (data) {
                 this.setState({data: data});
@@ -265,12 +269,15 @@ var VimeBox = React.createClass({
 
         return (
             <div className="vimeBox">
-                <Controls updateFilter={this.handleChange} bounds={this.state.bounds} paging={this.state.paging} show={this.state.show} data={this.state.data}/>
+                <Controls updateFilter={this.handleChange} bounds={this.state.bounds} paging={this.state.paging}
+                          show={this.state.show} data={this.state.data}/>
                 <h1>Vimeo-feed</h1>
 
 
-                <VimeList vimes={this.state.data} bounds={this.state.bounds} show={this.state.show} allLikes={this.state.allLikes}
-                          substring={this.state.substring} updateFilter={this.handleChange} togglePaging={this.togglePaging}/>
+                <VimeList vimes={this.state.data} bounds={this.state.bounds} show={this.state.show}
+                          allLikes={this.state.allLikes}
+                          substring={this.state.substring} updateFilter={this.handleChange}
+                          togglePaging={this.togglePaging}/>
 
             </div>
         );
@@ -283,6 +290,3 @@ ReactDOM.render(
     document.getElementById('content')
 );
 
-
-
-//TODO: Add pagination. It's a filter with two bounds, upper and lower.

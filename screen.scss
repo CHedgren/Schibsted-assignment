@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,200,700,700italic,400italic,200italic);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+
 * {
   box-sizing: border-box;
 }
@@ -10,7 +11,6 @@ body {
   background-color: #fff;
   color: #333;
 }
-
 
 header h1 {
   margin: 2rem;
@@ -35,7 +35,6 @@ h1 {
   }
 }
 
-
 ul {
   list-style: none;
   padding: 0;
@@ -47,7 +46,10 @@ ul {
     font-family: FontAwesome;
   }
 }
+
 .stats {
+  margin-left: 0.5rem;
+  margin-top: 2rem;
   .plays:before {
     content: "\f04b";
   }
@@ -73,7 +75,7 @@ ul {
   margin: 0 2rem 0 0;
 }
 
-.stats{
+.stats {
   padding: 0 2rem 0 0;
 
 }
