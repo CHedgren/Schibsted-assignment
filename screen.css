@@ -19,6 +19,8 @@ fieldset {
   padding: 2rem; }
   fieldset label {
     margin: 0 1rem 0 0; }
+  fieldset button {
+    margin-left: 0.5rem; }
 
 h1 {
   font-size: 3rem;
