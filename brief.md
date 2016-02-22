@@ -49,4 +49,4 @@ Note the authors image on the left, with content on the right.
 1. Provide the ability to view 10, 25, or 50 maximum results.
 1. DONE. Provide the ability to filter videos from users that have more than 10 likes.  (not videos that have more than 10 1 likes.)  A simple checkbox with description is fine for UI.
 1. DONE Provide the ability to filter videos based on text in the description.
-1. Provide a next button if there are more results than what is shown (e.g. no filters, and only 10 displayed)
+1. DONE Provide a next button if there are more results than what is shown (e.g. no filters, and only 10 displayed)
