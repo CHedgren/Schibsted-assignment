@@ -172,15 +172,18 @@ var Controls = React.createClass({
 
         return (
             <fieldset>
-                <select className="more" onChange={this.moreChange}>
+                <label> Show: <select className="more" onChange={this.moreChange}>
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
 
-                </select>
+                </select></label>
                 <label><input type="checkbox" className="likes" onClick={this.moreChange}/>Only users better than 10
                     likes, please</label>
+                <label>Filter
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
+                </label>
+
                 Showing {this.props.bounds[0]} - {this.props.bounds[1]} of 50
                 {(this.props.bounds[0] != 0) ?
                     <button className="previous" onClick={this.moreChange}>Previous</button> :
