@@ -1,3 +1,48 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,200,700,700italic,400italic,200italic);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+* {
+  box-sizing: border-box; }
+
+body {
+  font-family: "Raleway", sans-serif;
+  margin: 2rem auto;
+  background-color: #fff;
+  color: #333; }
+
+header h1 {
+  margin: 2rem; }
+
+fieldset {
+  background-color: #efefef;
+  border: 0;
+  margin: 0;
+  padding: 2rem; }
+
+h1 {
+  font-size: 3rem;
+  font-weight: 300;
+  margin: 0; }
+  h1 a {
+    text-decoration: none;
+    color: #333; }
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.plays:before, .likes:before, .comments:before {
+  font-family: FontAwesome; }
+
+.stats .plays:before {
+  content: "\f04b"; }
+
+.stats .likes:before {
+  content: "\f004"; }
+
+.stats .comments:before {
+  content: "\f075"; }
+
 .vime {
   display: flex;
   border: black 2px solid;
@@ -5,3 +50,9 @@
   margin: 5rem auto 5rem auto;
   overflow: hidden;
   padding: 5rem 2rem 2rem 5rem; }
+
+.author {
+  margin: 0 2rem 0 0; }
+
+.stats {
+  padding: 0 2rem 0 0; }

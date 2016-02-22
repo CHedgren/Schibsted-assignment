@@ -6,7 +6,7 @@ var Vime = React.createClass({
 
         return (
             <section className="vime">
-                <h1>{this.props.index +1}</h1>
+                {this.props.index +1}
                 <Author className="author" user={this.props.list.user}/>
                 <Blurb className="blurb" blurb={this.props.list}/>
                 <Stats className="stats" stats={this.props.list.stats}
@@ -19,7 +19,7 @@ var Vime = React.createClass({
 
 var Author = React.createClass({
     render: function () {
-        var imglink = this.props.user.pictures ? this.props.user.pictures.sizes[3].link : "";
+        var imglink = this.props.user.pictures ? this.props.user.pictures.sizes[2].link : "";
 
         var name = this.props.user.name;
         var link = this.props.user.link;
@@ -42,14 +42,14 @@ var Stats = React.createClass({
         var comments = this.props.comments.total;
         return (
             <ul className="stats">
-                <li>
-                    P {plays}
+                <li className="plays">
+                     {plays}
                 </li>
-                <li>
-                    L {likes}
+                <li className="likes">
+                     {likes}
                 </li>
-                <li>
-                    C {comments}
+                <li className="comments">
+                     {comments}
                 </li>
             </ul>
         );
@@ -181,8 +181,9 @@ var Controls = React.createClass({
                     likes, please</label>
                 <input className="filter" type="text" placeholder="filter" onChange={this.moreChange}/>
                 Showing {this.props.bounds[0]} - {this.props.bounds[1]} of 50
-                {this.state.paging ? <button className="next" onClick={this.moreChange}>Next</button>  : <button className="next" onClick={this.moreChange} disabled="true">Next</button>}
                 {(this.props.bounds[0] != 0) ? <button className="previous" onClick={this.moreChange}>Previous</button>  :<button className="previous" onClick={this.moreChange} disabled="true">Previous</button> }
+
+                {this.state.paging ? <button className="next" onClick={this.moreChange}>Next</button>  : <button className="next" onClick={this.moreChange} disabled="true">Next</button>}
             </fieldset>
         );
 
